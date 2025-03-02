@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # Variables
-RESOURCE_GROUP="MYappRG"
+RESOURCE_GROUP="MyappRG"
 LOCATION="northeurope"
 VM_NAME="MyUbuntuVM"
 VM_SIZE="Standard_B1s"
 ADMIN_USER="azureuser"
 IMAGE="Ubuntu2404"
 PORT=1337
-LOCALPATH="Myapp/bin/Release/net*/publish"
+BASEDIR=Myapp
+CURRDIR=$(pwd)
 
 # Step 1: Create Resource Group
 az group create \
@@ -49,7 +50,9 @@ ssh -o StrictHostKeyChecking=no $ADMIN_USER@$VM_IP << 'ENDSSH'
 ENDSSH
 
 # Step 6: Copy ASP.NET MVC App to VM
-cd $LOCALPATH
+cd ../$BASEDIR
+dotnet publish -c Release
+cd $CURRDIRcd 
 scp -r ./ $ADMIN_USER@$VM_IP:/opt/myapp
 echo "App Copied to VM"
 
@@ -75,7 +78,7 @@ ssh $ADMIN_USER@$VM_IP << 'ENDSSH'
 
     [Service]
     WorkingDirectory=/opt/myapp
-    ExecStart=/usr/bin/dotnet /opt/myapp/MyMvcApp.dll
+    ExecStart=/usr/bin/dotnet /opt/myapp/Myapp.dll
     Restart=always
     RestartSec=10
     KillSignal=SIGINT
