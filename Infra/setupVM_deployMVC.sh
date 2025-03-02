@@ -8,8 +8,6 @@ VM_SIZE="Standard_B1s"
 ADMIN_USER="azureuser"
 IMAGE="Ubuntu2404"
 PORT=1337
-BASEDIR=Myapp
-CURRDIR=$(pwd)
 
 # Step 1: Create Resource Group
 az group create \
@@ -50,9 +48,9 @@ ssh -o StrictHostKeyChecking=no $ADMIN_USER@$VM_IP << 'ENDSSH'
 ENDSSH
 
 # Step 6: Copy ASP.NET MVC App to VM
-cd ../$BASEDIR
-dotnet publish -c Release
-cd $CURRDIRcd 
+cd ../
+dotnet publish -c Release --output ./publish
+cd publish
 scp -r ./ $ADMIN_USER@$VM_IP:/opt/myapp
 echo "App Copied to VM"
 
