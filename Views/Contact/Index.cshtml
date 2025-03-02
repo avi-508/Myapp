@@ -1,0 +1,56 @@
+@model Myapp.Models.ContactViewModel;
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container">
+    <h1>Contact Us</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-controller="Contact" asp-action="Submit" method="post">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Subject">Subject</label>
+                    <input asp-for="Subject" class="form-control" />
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Message">Message</label>
+                    <textarea asp-for="Message" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Our Contact Information</h5>
+                    <p class="card-text">
+                        <strong>Address:</strong> Lorensbergsgatan 32, Göteborg, Sweden.<br />
+                        <strong>Phone:</strong> 0046720055555 <br />
+                        <strong>Email:</strong> info@mycompany.se
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
